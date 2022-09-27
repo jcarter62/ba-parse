@@ -4,6 +4,7 @@ import queue
 import sys
 import getopt
 from datetime import datetime
+import copy
 
 inputfile = ''
 outputfile = ''
@@ -409,7 +410,7 @@ def save_report_html(data, file):
             result.append(key)
         return result
 
-    def getusernames() -> []:
+    def getusernames(data) -> []:
         result = []
         for row in data:
             if row['User'].strip() > '':
@@ -508,8 +509,10 @@ def save_report_html(data, file):
             '''
         return x
 
-    users = getusernames()
+    full_data = copy.deepcopy(data)
+    users = getusernames(data)
     for user in users:
+        data = copy.deepcopy(full_data)
         # fill user_data with all rows for this user
         user_data = []
         for row in data:
