@@ -311,11 +311,12 @@ def save_html(data, file):
         # '
         f.write('<html>\n')
         f.write('<head>\n')
-        f.write('<title>Chrome History</title>\n')
+        title = get_report_title()
+        f.write(f'<title>{title}</title>\n')
         f.write(generate_styles())
         f.write('</head>\n')
         f.write('<body>\n')
-        f.write('<h2>Chrome History</h2>\n')
+        f.write(f'<h1>{title}</h1>\n')
         f.write('<table id="datatable">\n')
         f.write('<thead>\n')
         txt = '<tr  >'
@@ -668,10 +669,14 @@ def get_max_date(data) -> str:
 
 
 # generate report title with date range
-def get_report_title(username) -> str:
+def get_report_title(username:str = None) -> str:
     min_date = get_min_date(data)
     max_date = get_max_date(data)
-    return 'Report for ' + os.path.basename(inputfile) + '/' + username + ', between ' + min_date + ' and ' + max_date
+    if username is None:
+        return f'Report for - {min_date} to {max_date}'
+    else:
+        return f'Report for {username} - {min_date} to {max_date}'
+#    return 'Report for ' + os.path.basename(inputfile) + '/' + username + ', between ' + min_date + ' and ' + max_date
 
 
 if __name__ == "__main__":
